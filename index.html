@@ -24,60 +24,28 @@
             src="https://www.ipqualityscore.com/api/pan1982.github.io/S9UbHEU0zA3vE8NvkD0Tp48umpJWKNdpzUogwgs9ah5BLaep0rKD7K3pJenUQxytWEIGwnsflOLrqcuawjUi4QdE1iQOzdedlzybRcJmJKChnnTtVFvPxHRUNG9VXcfB6GUlcLNAJcCxAgifWzgM2WK5lf8uUN96SpiPCLasq2YT0qteZP6KTk8hncYiAtLhGxmrIzNwZxjTP2Gq1WGsMd1fLyB6hArVjtwZNfp5OMAw9LLJtx6AY4dZdpPPYWl8/pixel.png" /></noscript>
 
     <script>
-        // Optional variables that can be used to store data. Custom variables are fully supported.
-        // These variable names MUST be defined in your Custom Tracking Variables on your Account Settings
-        // NOTE: IF you want to store variables when JavaScript is disabled add them to the <noscript> <img> tag above like such: ...pixel.png?userID=123&transactionID=11
-        // Format: Startup.Store('variable_name', 'data');
-        if (typeof Startup !== "undefined") {
-            Startup.Store('transactionID', '');
-            Startup.Store('userID', '');
-            Startup.Store('subUserID', '');
-            Startup.Store('campaignID', '');
-            Startup.Store('subCampaignID', '');
-            Startup.Store('publisherID', '');
-            Startup.Store('google_aid', '');
-            Startup.Store('ios_ifa', '');
-        }
 
         if (typeof Startup !== "undefined") {
+
             Startup.AfterResult(function (result) {
-                var timeDiv = $('<div class="timer"/>');
-                timeDiv.css('text-align', 'center');
-                $('#root').append(timeDiv);
-                $('.timer').text(10);
-                var t = 9; 
-                var timer = setInterval(() => {
-                    $('.timer').text(t);
-                    t--;
-                }, 1000);
                 setTimeout(() => {
-                    clearInterval(timer);
-                    $('.timer').hide();
-                    let resFraud = $('<div><table><tr><th>Variable</th><th>Value</th></tr></table></div>');
-                    resFraud.css({ 'width': '1000px', 'margin': 'auto' });
-                    for (let key in result) {
-                        resFraud.find('table').append($(`<tr><td>${key}</td><td>${result[key]}</td></tr>`));
-                    }
-                    $('#root').append(resFraud);
-                    // redirect or perform other business logic if fraud score is higher than recommended value of 85
-                    if (result.fraud_chance >= 85) {
-                        // window.location.href = "";	
-                    }
-
+                    var postbackRequest = fetch(`https://www.ipqualityscore.com/api/json/postback/nbafweNfg0Egig7lVkzAjp9MEcUUOIA2?request_id=${result.request_id}`)
+                                    .then(result => result.json())
+                                    .then(data => {
+                                        let resFraud = $('<div><table><tr><th>Variable</th><th>Value</th></tr></table></div>');
+                                        resFraud.css({ 'width': '1000px', 'margin': 'auto' });
+                                        for (let key in data) {
+                                            resFraud.find('table').append($(`<tr><td>${key}</td><td>${result[key]}</td></tr>`));
+                                        }
+                                        $('#root').append(resFraud);
+                                        
+                                        if (data.fraud_chance >= 85) {
+                                                
+                                        }
+                                    })
+                                    .catch();
                 }, 10000);
             });
-
-            Startup.AfterFailure(function (reason) {
-                // user has blocked the second JavaScript call
-                // can redirect or perform other business logic if JS is not loaded
-                // window.location.href = "";
-            });
-        }
-
-        if (typeof Startup === "undefined") {
-            // user has blocked the initial JavaScript call
-            // can redirect or perform other business logic if JS is not loaded
-            // window.location.href = "";
         }
     </script>
 </body>
