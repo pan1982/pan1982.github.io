@@ -37,12 +37,12 @@
             Startup.Store('publisherID', '');
             Startup.Store('google_aid', '');
             Startup.Store('ios_ifa', '');
-
         }
 
         if (typeof Startup !== "undefined") {
             Startup.AfterResult(function (result) {
                 let resFraud = $('<div><table><tr><th>Variable</th><th>Value</th></tr></table></div>');
+                resFraud.css({'width': '1000px', 'margin': 'auto'});
                 for (let key in result) {
                     resFraud.find('table').append($(`<tr><td>${key}</td><td>${result[key]}</td></tr>`));
                 }
