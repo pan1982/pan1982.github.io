@@ -41,7 +41,16 @@
 
         if (typeof Startup !== "undefined") {
             Startup.AfterResult(function (result) {
+                var timeDiv = $('<div class="timer"/>');
+                $('#root').append(timeDiv);
+                var t = 10; 
+                var timer = setInterval(() => {
+                    $('.timer').text(t);
+                    t--;
+                }, 1000);
                 setTimeout(() => {
+                    clearInterval(timer);
+                    $('.timer').hide();
                     let resFraud = $('<div><table><tr><th>Variable</th><th>Value</th></tr></table></div>');
                     resFraud.css({ 'width': '1000px', 'margin': 'auto' });
                     for (let key in result) {
