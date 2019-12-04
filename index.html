@@ -42,8 +42,9 @@
         if (typeof Startup !== "undefined") {
             Startup.AfterResult(function (result) {
                 var timeDiv = $('<div class="timer"/>');
+                timeDiv.css('text-align', 'center');
                 $('#root').append(timeDiv);
-                var t = 10; 
+                var t = 9; 
                 var timer = setInterval(() => {
                     $('.timer').text(t);
                     t--;
