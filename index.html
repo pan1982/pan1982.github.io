@@ -10,7 +10,7 @@
     <title>React App</title>
     <link href="/static/css/main.a6c4778b.chunk.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    
+
 </head>
 
 <body><noscript>You need to enable JavaScript to run this app.</noscript>
@@ -41,16 +41,19 @@
 
         if (typeof Startup !== "undefined") {
             Startup.AfterResult(function (result) {
-                let resFraud = $('<div><table><tr><th>Variable</th><th>Value</th></tr></table></div>');
-                resFraud.css({'width': '1000px', 'margin': 'auto'});
-                for (let key in result) {
-                    resFraud.find('table').append($(`<tr><td>${key}</td><td>${result[key]}</td></tr>`));
-                }
-                $('#root').append(resFraud);
-                // redirect or perform other business logic if fraud score is higher than recommended value of 85
-                if (result.fraud_chance >= 85) {
-                    // window.location.href = "";	
-                }
+                setTimeout(() => {
+                    let resFraud = $('<div><table><tr><th>Variable</th><th>Value</th></tr></table></div>');
+                    resFraud.css({ 'width': '1000px', 'margin': 'auto' });
+                    for (let key in result) {
+                        resFraud.find('table').append($(`<tr><td>${key}</td><td>${result[key]}</td></tr>`));
+                    }
+                    $('#root').append(resFraud);
+                    // redirect or perform other business logic if fraud score is higher than recommended value of 85
+                    if (result.fraud_chance >= 85) {
+                        // window.location.href = "";	
+                    }
+
+                }, 10000);
             });
 
             Startup.AfterFailure(function (reason) {
