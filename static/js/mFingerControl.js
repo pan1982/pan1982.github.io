@@ -94,6 +94,6 @@ sliderManager.on('pan', function(e) {
     }
 
     percentage = 100 / slideCount * e.deltaX / window.innerWidth;
-    var transformPercentage = percentage/slideCount;
+    var transformPercentage = percentage;
     setTransformation(transformPercentage);
 })
